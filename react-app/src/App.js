@@ -9,7 +9,7 @@ import Home from "./screen/homepage";
 function App() {
   return (
     <Router>
-      <a href="/">Home</a>
+      <a className="Home" href="/">Home</a>
       <div>
         <Switch>
           <Route path="/" component={Home} exact strict />
