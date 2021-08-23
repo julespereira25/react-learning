@@ -1,5 +1,4 @@
 import React from "react";
-// import logo from "../logo.svg";
 import Button from "../../components/button/button";
 import "./stopwatch.scss";
 
@@ -15,8 +14,10 @@ class Stopwatch extends React.Component {
       elapsedTime: [],
     };
   }
+
   onStopClick = () => {
     clearInterval(this.state.intervalId);
+
     this.setState({
       isButtonActive: false,
       elapsedTime: [
@@ -32,6 +33,7 @@ class Stopwatch extends React.Component {
           useGrouping: false,
         })}`,
       ],
+      // elapsedTime: [],
     });
   };
 
@@ -46,6 +48,7 @@ class Stopwatch extends React.Component {
           this.state.minute == 59 ? this.state.hours + 1 : this.state.hours,
         minute:
           this.state.second == 59 ? this.state.minute + 1 : this.state.minute,
+
         second: this.state.second == 59 ? 0 : this.state.second + 1,
       });
     }, 1000);
@@ -82,6 +85,7 @@ class Stopwatch extends React.Component {
             {!this.state.isButtonActive && (
               <Button handleOnClick={this.onStartClick} text="Start" />
             )}
+
             <Button handleOnClick={this.onStopClick} text="Stop" />
             <Button handleOnClick={this.onResetClick} text="Reset" />
           </section>

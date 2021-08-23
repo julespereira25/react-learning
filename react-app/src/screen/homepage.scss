@@ -18,3 +18,9 @@
   font-weight: 400;
   cursor: pointer;
 }
+
+@media screen and (max-width: 425px) {
+  .home button {
+    font-size: 10px !important;
+  }
+}

@@ -50,3 +50,20 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 425px) {
+  .controls-container button {
+    font-size: 10px !important;
+  }
+
+  .timer-container,
+  .timer-text,
+  .time-container {
+    font-size: 30px;
+  }
+}
+
+.StopWatchElapsed {
+  color: white;
+  font-size: 20px;
+}
