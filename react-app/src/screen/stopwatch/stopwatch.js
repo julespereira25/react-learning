@@ -10,16 +10,25 @@ class Stopwatch extends React.Component {
       minute: 0,
       second: 0,
       isButtonActive: false,
+      isdisplayResetButton: false,
+      isStartButton: false,
+      isStopButton: false,
       intervalId: "",
       elapsedTime: [],
     };
   }
 
   onStopClick = () => {
+    if (this.state.elapsedTime.length == 1) {
+      return;
+    }
     clearInterval(this.state.intervalId);
 
     this.setState({
-      isButtonActive: false,
+      // isButtonActive: true,
+      isStopButton: true,
+      isStartButton: true,
+      isdisplayResetButton: false,
       elapsedTime: [
         ...this.state.elapsedTime,
         `${this.state.hours.toLocaleString("en-US", {
@@ -33,12 +42,20 @@ class Stopwatch extends React.Component {
           useGrouping: false,
         })}`,
       ],
-      // elapsedTime: [],
     });
   };
 
   onResetClick = () => {
-    this.setState({ hours: 0, minute: 0, second: 0 });
+    this.setState({
+      hours: 0,
+      minute: 0,
+      second: 0,
+      isdisplayResetButton: true,
+      isStartButton: false,
+      isStopButton: true,
+      isButtonActive: false,
+      elapsedTime: [],
+    });
   };
 
   onStartClick = () => {
@@ -52,7 +69,13 @@ class Stopwatch extends React.Component {
         second: this.state.second == 59 ? 0 : this.state.second + 1,
       });
     }, 1000);
-    this.setState({ intervalId: intervalId, isButtonActive: true });
+    this.setState({
+      intervalId: intervalId,
+      isButtonActive: true,
+      isStartButton: true,
+      isStopButton: false,
+      isdisplayResetButton: true,
+    });
   };
 
   render() {
@@ -82,16 +105,25 @@ class Stopwatch extends React.Component {
           </section>
 
           <section className="controls-container">
-            {!this.state.isButtonActive && (
+            {!this.state.isButtonActive && !this.state.isStartButton && (
               <Button handleOnClick={this.onStartClick} text="Start" />
             )}
 
-            <Button handleOnClick={this.onStopClick} text="Stop" />
-            <Button handleOnClick={this.onResetClick} text="Reset" />
+            {this.state.isButtonActive && !this.state.isStopButton && (
+              <Button handleOnClick={this.onStopClick} text="Stop" />
+            )}
+
+            {this.state.isButtonActive && !this.state.isdisplayResetButton && (
+              <Button handleOnClick={this.onResetClick} text="Reset" />
+            )}
           </section>
         </div>
         {this.state.elapsedTime.map(function (item, index) {
-          return <p className="StopWatchElapsed">Time elapsed:{item}</p>;
+          return (
+            <p key={index} className="StopWatchElapsed">
+              Time elapsed:{item}
+            </p>
+          );
         })}
       </div>
     );

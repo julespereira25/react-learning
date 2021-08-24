@@ -1,7 +1,5 @@
 import React from "react";
-import logo from "../logo.svg";
 import Button from "../components/button/button";
-import Stopwatch from "./stopwatch/stopwatch";
 import { Link } from "react-router-dom";
 import "./homepage.scss";
 

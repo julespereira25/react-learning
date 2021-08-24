@@ -12,18 +12,16 @@ class Timer extends React.Component {
       isButtonActive: false,
       intervalId: "",
       elapsedTime: [],
+      resetButtonActive: false,
     };
   }
 
   onLapClick = () => {
-    // clearInterval(this.state.intervalId);
-
     if (this.state.elapsedTime.length > 10) {
       return;
     }
 
     this.setState({
-      // isButtonActive: false,
       elapsedTime: [
         ...this.state.elapsedTime,
         `${this.state.hours.toLocaleString("en-US", {
@@ -58,6 +56,9 @@ class Timer extends React.Component {
     this.setState({
       isButtonActive: false,
       elapsedTime: [],
+      hours: 0,
+      minute: 0,
+      second: 0,
     });
   };
 
@@ -68,21 +69,36 @@ class Timer extends React.Component {
         <div className="timer-container1">
           <section className="timer-container">
             <p className="timer-content">
-              {this.state.hours < 10
+              {this.state.hours.toLocaleString("en-US", {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              })}
+
+              {/*this.state.hours < 10
                 ? "0" + this.state.hours
-                : this.state.hours}
+              : this.state.hours */}
             </p>
             <span>:</span>
             <p className="timer-content">
-              {this.state.minute < 10
+              {this.state.minute.toLocaleString("en-US", {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              })}
+
+              {/*this.state.minute < 10
                 ? "0" + this.state.minute
-                : this.state.minute}
+              : this.state.minute */}
             </p>
             <span>:</span>
             <p className="timer-content">
-              {this.state.second < 10
+              {this.state.second.toLocaleString("en-US", {
+                minimumIntegerDigits: 2,
+                useGrouping: false,
+              })}
+
+              {/*this.state.second < 10
                 ? "0" + this.state.second
-                : this.state.second}
+              : this.state.second */}
             </p>
           </section>
 
@@ -90,12 +106,22 @@ class Timer extends React.Component {
             {!this.state.isButtonActive && (
               <Button handleOnClick={this.onStartClick} text="Start" />
             )}
-            <Button handleOnClick={this.onLapClick} text="Lap" />
-            <Button handleOnClick={this.onStopClick} text="Stop" />
+
+            {this.state.isButtonActive && (
+              <Button handleOnClick={this.onLapClick} text="Lap" />
+            )}
+
+            {this.state.isButtonActive && (
+              <Button handleOnClick={this.onStopClick} text="Stop" />
+            )}
           </section>
         </div>
-        {this.state.elapsedTime.map(function (item) {
-          return <p className="TimeElapsed">Lap:{item}</p>;
+        {this.state.elapsedTime.map(function (item, index) {
+          return (
+            <p key={index} className="TimeElapsed">
+              Lap:{item}
+            </p>
+          );
         })}
       </div>
     );
